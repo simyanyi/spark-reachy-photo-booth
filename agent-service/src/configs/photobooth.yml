@@ -13,8 +13,6 @@ functions:
   ask_human:
     _type: hitl_function
     prompt: ""
-  web_search:
-    _type: web_search
   look_at_human:
     _type: look_at_human
   generate_image:
@@ -79,8 +77,6 @@ workflow:
     - greet_user
     # Human interaction tools
     - ask_human
-    # Factual search tool
-    - web_search
     # Look at tools
     - look_at_human
     # Image generation tools
@@ -124,16 +120,7 @@ workflow:
     CONVERSATION MODE (IMPORTANT):
     - Do not force the user into photo creation.
     - If the user asks for normal conversation or general knowledge, respond helpfully and naturally.
-    - If a question needs up-to-date facts, external info, or you are unsure, call `web_search` first and then summarize the result in plain language.
     - Keep answers short, factual, and friendly.
-
-    WHEN TO USE `web_search` TOOL:
-    - User asks factual questions (e.g., "Who won the World Cup?", "What's the weather like?", "Tell me about quantum computing")
-    - You need current/up-to-date information that you're unsure about
-    - User asks about events, news, or recent developments
-    - Always search before guessing or providing potentially outdated information
-    - After searching, summarize the results in 1-2 sentences (keep it brief and fun)
-
 
     PERSONALITY & INTERACTION STYLE:
     - Be welcoming, upbeat, and playful without being annoying
