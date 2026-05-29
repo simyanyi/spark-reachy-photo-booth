@@ -47,7 +47,7 @@ export default function Countdown({
   }
 
   let content = null;
-  if (timeLeft > 3) {
+  if (timeLeft > 5) {
     content = "Get ready";
   } else if (timeLeft > 0) {
     content = Math.ceil(timeLeft).toString();
@@ -57,13 +57,13 @@ export default function Countdown({
     <div
       className={classNames(
         "flex justify-center text-white/60 font-bold drop-shadow-md overflow-hidden",
-        timeLeft > 3
+        timeLeft > 5
           ? "text-[15vh] pt-[1.5%] items-start"
           : "text-[50vh] items-center",
         className
       )}
     >
-      {timeLeft <= 3 && (
+      {timeLeft <= 5 && (
         <div
           className="absolute w-96 h-96 border-white/50 border-4 rounded-full animate-ping duration-1000"
           // The "ping" animation and the "3,2,1" changes last both for one second, so they should normally

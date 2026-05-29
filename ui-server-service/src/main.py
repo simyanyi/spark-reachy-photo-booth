@@ -124,8 +124,8 @@ class State:
             and self.state.transcript
             and self.state.transcript.id == clip_status.action_uuid
         ):
-            # Wait 3 seconds before clearing the transcript
-            duration = 3.0
+            # Wait 5 seconds before clearing the transcript
+            duration = 5.0
 
             async def clear_task():
                 await asyncio.sleep(duration)

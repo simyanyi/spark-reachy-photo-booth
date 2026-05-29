@@ -117,7 +117,7 @@ class LightConfig(BaseModel):
         description="Duration for slow color transitions between animations (seconds)",
     )
     picture_preparation_duration: float = Field(
-        default=7.25,
+        default=10.0,
         ge=0.0,
         le=30.0,
         description="Duration for picture preparation fade-in animation (seconds)",
@@ -198,7 +198,7 @@ class InteractionManagerConfig(BaseConfig):
     )
 
     time_between_comments: Range = Field(
-        default=Range(min=1.5, max=3.0),
+        default=Range(min=1.5, max=2.0),
         description="The range of time between image generation comments in seconds. \
         Each comment break is a random value between the minimum and maximum.",
     )

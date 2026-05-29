@@ -129,31 +129,40 @@ async def photo_booth_react_function(
         QUESTION_BLOCK_END = "%%QUESTION_BLOCK_END%%"
 
         if config.quick_photo_mode:
-            logger.info("Quick photo mode enabled - LLM will select from lists")
+            logger.info(
+                "Quick photo mode enabled - LLM will only ask 2 questions and select from lists"
+            )
+
+            # quick_mode_patch = f"""
+            # QUICK PHOTO MODE IS ENABLED:
+            # - DO NOT ask the user any questions about location, costume, or artistic style.
+            # - Randomly select ONE option from each list below. Be truly random - avoid always picking the first option:
+            # * Artistic style - pick one from: {config.quick_styles}
+            # * Background/location - pick one from: {config.quick_locations}
+            # * Outfit/costume - pick one from: {config.quick_costumes}
+            # - Each interaction should feel different, so vary your selections across the lists.
+            # - Proceed directly to capturing the user with `look_at_human`, then call `generate_image` immediately.
+            # - Construct the image generation prompt using the selected values, following the existing prompt format rules."""
 
             quick_mode_patch = f"""
             QUICK PHOTO MODE IS ENABLED:
-            - DO NOT ask the user any questions about location, costume, or artistic style.
-            - Randomly select ONE option from each list below. Be truly random - avoid always picking the first option:
-            * Artistic style - pick one from: {config.quick_styles}
-            * Background/location - pick one from: {config.quick_locations}
-            * Outfit/costume - pick one from: {config.quick_costumes}
-            - Each interaction should feel different, so vary your selections across the lists.
-            - Proceed directly to capturing the user with `look_at_human`, then call `generate_image` immediately.
-            - Construct the image generation prompt using the selected values, following the existing prompt format rules."""
+            - DO NOT ask the user any questions on artistic style.
+            - Only ask the user about the background/location, and outfit/costume.
+            - For artistic style, use something as natural as possible.
+            - There should not be any extra people or characters in the photo - the focus should be on the actual people in front of the camera.
 
-            markers_found = QUESTION_BLOCK_START in prompt and QUESTION_BLOCK_END in prompt
+            """
+
+            markers_found = (
+                QUESTION_BLOCK_START in prompt and QUESTION_BLOCK_END in prompt
+            )
             logger.info(f"Quick mode patch - markers found: {markers_found}")
 
             prompt = remove_text_block(
-                prompt,
-                QUESTION_BLOCK_START,
-                QUESTION_BLOCK_END,
-                quick_mode_patch
+                prompt, QUESTION_BLOCK_START, QUESTION_BLOCK_END, quick_mode_patch
             )
             logger.info(f"Quick mode patch applied. Prompt length: {len(prompt)}")
             logger.info(f"Quick mode patch applied. Prompt: {prompt}")
-
 
     if not PhotoBoothReactAgentGraph.validate_system_prompt(prompt):
         raise ValueError("Invalid system prompt")

@@ -79,7 +79,7 @@ MODELS = {
 class TTSModelConfig(BaseModel):
     engine: str = Field(default="Kokoro")
     model_name: str = Field(default="hexgrad/Kokoro-82M")
-    voice_id: str = Field(default="am_puck")
+    voice_id: str = Field(default="af_bella")
     speed: float = Field(default=1.0, ge=0.1, le=3.0)
     max_characters: int = Field(
         default=200,

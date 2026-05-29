@@ -3,6 +3,7 @@
 
 import asyncio
 import contextlib
+import time
 from typing import Any
 
 import statesman
@@ -764,6 +765,9 @@ class PhotoBoothBotStateMachine(RobotStateMachine):
         """Handle preparing for picture event from any state"""
         self._logger.info(f"[{self.robot_name}] Preparing for picture...")
 
+        countdown_started_at = time.monotonic()
+        countdown_duration = self.config.light_config.picture_preparation_duration
+
         # Set light when preparing for taking a picture
         assert self.light_manager is not None
         await self.light_manager.light_on(
@@ -772,7 +776,7 @@ class PhotoBoothBotStateMachine(RobotStateMachine):
                 priority=2,
                 animation=StaticAnimation,
                 primary_color=Color.GRAY,
-                in_transition_duration=self.config.light_config.picture_preparation_duration,
+                in_transition_duration=countdown_duration,
             ),
         )
 
@@ -780,6 +784,10 @@ class PhotoBoothBotStateMachine(RobotStateMachine):
         await self.play_and_wait(
             clip_name="picturePreparation", priority=0, opacity=1, blend_out=0.0
         )
+
+        remaining = countdown_duration - (time.monotonic() - countdown_started_at)
+        if remaining > 0:
+            await asyncio.sleep(remaining)
 
     async def handle_take_picture(self) -> None:
         """Handle taking picture event from any state"""

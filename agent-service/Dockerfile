@@ -31,6 +31,7 @@ ENV PATH="/app/.venv/bin:$PATH"
 
 COPY --from=builder --chown=app:app /app/.venv /app/.venv
 COPY --chown=app:app ./agent-service /app
+COPY --chown=app:app ./agent-service/src/Dell_Technologies_logo.svg.png /app/src/
 
 USER app
 
