@@ -13,7 +13,7 @@ services:
       context: ..
       dockerfile: ui-frontend/Dockerfile
       args:
-        - VITE_UI_SERVER_WS_URL=ws://127.0.0.1:9000/ws
+        - VITE_UI_SERVER_WS_URL=ws://127.0.0.1:9000/ws   # change ip to host ip if not running in host network mode
         - VITE_VIDEO_WIDTH=1920
         - VITE_VIDEO_HEIGHT=1080
     ports:

@@ -71,3 +71,10 @@ This project does currently not accept external contributions.
 ## Security Notice
 
 This playbook is intended for local DGX Spark deployment only. It is provided as a reference implementation and is not production-ready. Do not expose any of its services beyond your trusted, local development environment.
+
+
+## See UI
+
+```bash
+ssh -L 3001:localhost:3001 -L 9000:localhost:9000 <user>@<vm-ip>
+```
